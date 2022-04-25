@@ -1,0 +1,48 @@
+en:
+  choose_language: "Enter 1) for English or 2) for Espanol."
+  valid_lang: "Please enter 1 or 2."
+  welcome: "Welcome to Calculator! Enter your name:"
+  greet: "Hello %{name}!"
+  valid_name: "Make sure to enter a valid name."
+  number1: "Type a number."
+  number2: "Type another number."
+  valid_number: "That's not a valid number."
+  operator:
+          "Select an operation to perform:\n
+            1) add\n
+            2) subtract\n
+            3) multiply\n
+            4) divide\n"
+  valid_operator: "That is not a valid operator. It has to be 1-4."
+  div_by_zero: "Cannot divide by zero."
+  adding: 'Adding the two numbers...'
+  subtracting: 'Subtracting the two numbers...'
+  multiplying: 'Multiplying the two numbers...'
+  dividing: 'Dividing the two numbers...'
+  result: 'The result is %{result}'
+  another: "Do you want to perform another calculation? (Y to do it again.)"
+  thanks: "Thanks for using the calculator!"
+
+es:
+  welcome: "Bienvenido a la Calculadora! Escriba su nombre:"
+  greet: "Hola %{name}!"
+  valid_name: "Asegurase que su nombre sea valido."
+  number1: "Escriba un numero."
+  number2: "Escriba otro numero."
+  valid_number: "No es un numero valido."
+  operator:
+          "Selecciona una operacion que realizar:\n
+            1) agregar\n
+            2) restar\n
+            3) multiplicar\n
+            4) dividir\n"
+  valid_operator: "Estono es un operador valido. Tiene que ser de 1-4."
+  div_by_zero: "No se puede dividir por cero."
+  adding: 'Sumando los numeros...'
+  subtracting: 'Restando los numeros...'
+  multiplying: 'Multiplicando los numeros...'
+  dividing: 'Dividiendo los numeros...'
+  result: 'El resultado es %{result}'
+  another: "Quieres realizar otro calculo? (S para realizar otro.)"
+  thanks: "Gracias por usar la calculadora!"
+# ... rest of file omitted for brevity

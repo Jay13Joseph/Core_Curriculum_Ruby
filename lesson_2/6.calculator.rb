@@ -1,89 +1,111 @@
-# Ask the user for 2 numbers
-# Ask for the operation
-# Display the result
-def prompt(message)
-  Kernel.puts("=> #{message}")
+require 'yaml'
+LANG = ('es')
+
+MESSAGES = YAML.load_file('calculator_messages.yml')
+# puts MESSAGES.inspect
+
+def messages(message, lang = 'en')
+  MESSAGES[lang][message]
 end
 
-def valid_number?(num)
-  num.to_i() != 0
+def prompt(message)
+  puts "=> #{message}"
+end
+
+def integer?(input)
+  input.to_i.to_s == input
+end
+
+def float?(input)
+  input.to_f.to_s == input
+end
+
+def valid_num?(input)
+  integer?(input) || float?(input)
 end
 
 def operation_to_message(op) # This is the last code evaluated, so it's returned
-  case op
-  when '1'
-    'Adding'
-  when '2'
-    'Subtracting'
-  when '3'
-    'Multiplying'
-  when '4'
-    'Dividing'
-  end
+  word = case op
+         when '1'
+           messages('adding', LANG)
+         when '2'
+           messages('subtracting', LANG)
+         when '3'
+           messages('multiplying', LANG)
+         when '4'
+           messages('dividing', LANG)
+         end
+
+  word
 end
 
-prompt('Welcome to the Calculator! Enter your name:')
+# prompt(messages('choose_language', LANG))
+
+prompt(messages('welcome', LANG))
 
 name = ''
 loop do
   name = Kernel.gets().chomp()
 
   if name.empty?()
-    prompt("Write a valid name.")
+    prompt(messages('valid_name', LANG))
   else
     break
   end
 end
 
-prompt("Hi, #{name}!")
+prompt(messages('greet', LANG) % { :name => name })
 
 loop do # main loop
   number1 = ''
   loop do
-    prompt('Type a number.')
+    prompt(messages('number1', LANG))
     number1 = Kernel.gets().chomp()
 
-    if valid_number?(number1)
+    if valid_num?(number1)
       break
     else
-      prompt("That doesn't look like a valid number.")
+      prompt(messages('valid_number', LANG))
     end
   end
 
   number2 = ''
   loop do
-    prompt('Type another number.')
+    prompt(messages('number2', LANG))
     number2 = Kernel.gets().chomp()
 
-    if valid_number?(number2)
+    if valid_num?(number2)
       break
     else
-      prompt("That doesn't look like a valid number.")
+      prompt(messages('valid_number', LANG))
     end
   end
 
-  # Kernel.puts("The first number is #{number1}, and the second is #{number2}!")
-  operator_prompt = <<-MSG
-What operation would you like to perform?
-  1)Add
-  2)Subtract
-  3)Multiply
-  4)Divide
-MSG
-  prompt(operator_prompt)
+# Kernel.puts("The first number is #{number1}, and the second is #{number2}!")
+#   operator_prompt = <<-MSG
+# What operation would you like to perform?
+#   1)Add
+#   2)Subtract
+#   3)Multiply
+#   4)Divide
+# MSG
+  prompt(messages('operator', LANG))
 
   operator = ''
   loop do
     operator = Kernel.gets().chomp()
 
-    if %w(1 2 3 4).include?(operator)
+    if operator == '4' && number2 == '0'
+      prompt(messages('div_by_zero', LANG))
+      prompt(messages('operator', LANG))
+    elsif %w(1 2 3 4).include?(operator)
       break
     else
-      prompt("Choose 1, 2, 3, or 4")
+      prompt(messages('valid_operator', LANG))
     end
   end
 
-  prompt("#{operation_to_message(operator)} the two numbers...")
+  prompt("#{operation_to_message(operator)}")
   # if operator == '1'
   #   result = number1.to_i() + number2.to_i()
   # elsif operator == '2'
@@ -105,11 +127,23 @@ MSG
              number1.to_f() / number2.to_f()
            end
 
-  prompt("The result is #{result}")
+  def again?
+    loop do
+      answer = gets.chomp
+      return false if %w(n no).include?(answer)
+      if LANG == 'en'
+        return true if %w(y yes).include?(answer)
+      elsif %w(s si).include?(answer)
+        return true
+      end
+      prompt('another', LANG)
+    end
+  end
+  prompt(messages('result', LANG) % { :result => result })
 
-  prompt("Do you want to perform another calculation? (Y to do it again.)")
-  answer = Kernel.gets().chomp()
-  break unless answer.downcase.start_with?('y')
+  prompt(messages('another', LANG))
+
+  break unless again?
 end
-
-prompt("Thanks for using the calculator!")
+system('clear')
+prompt(messages('thanks', LANG))
